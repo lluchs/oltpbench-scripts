@@ -1,0 +1,5 @@
+[mysqld]
+datadir=/tmp/oltpbench
+socket=/tmp/oltpbench.sock
+bind-address=0.0.0.0
+skip-name-resolve
