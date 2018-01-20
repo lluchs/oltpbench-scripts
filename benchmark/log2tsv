@@ -1,0 +1,19 @@
+#!/usr/bin/awk -f
+
+BEGIN {
+	OFS = "\t";
+	print "type", "time_start", "time_end", "reqs_per_sec", "cpufid";
+}
+
+/start fast\/slow ultmigration/ { type = "fast/slow ultmigration" }
+/start only fast baseline/ { type = "only fast baseline" }
+/start only slow baseline/ { type = "only slow baseline" }
+/start CpuFid / { type = "CpuFid"; cpufid = $4 }
+/end CpuFid / { cpufid = "" }
+
+/start:/ { time_start = $1 }
+/reqs\/s:/ { reqs_per_sec = $11 }
+/end:/ {
+	time_end = $1;
+	print type, time_start, time_end, reqs_per_sec, cpufid;
+}
