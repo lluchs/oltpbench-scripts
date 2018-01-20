@@ -1,0 +1,128 @@
+#!/bin/zsh
+
+set -eu
+
+# Configuration
+
+# CPUs used for ultmigration
+export FAST_CPU=0 SLOW_CPU=2
+# CPU used for benchmark program
+BENCH_CPU=7
+# CPU used for power monitoring.
+OTHER_CPU=11
+
+# Command for reading the power meter.
+powermeter() {
+	taskset -c $OTHER_CPU ssh i30pc34 sudo '~/src/ut71dmm/ut71dmm'
+}
+
+# SWP profile and threshold
+_SWP_CFG=( ../mysql-profile.txt(:a) )
+export SWP_CFG="$_SWP_CFG"
+export SWP_THRESHOLD=0.01
+
+# Extra single frequency ids as comparison.
+# Note: default "slow" is 50, "fast" is 144
+CPU_FIDS=(69 88 106 125)
+
+# Path to build directory of asym-scheduling
+ASYM_DIR=( ../../asym-scheduling(:a) )
+ASYM_BUILD=$ASYM_DIR/build
+
+# End configuration
+
+cd ${0:A:h}
+
+benchname=${1?benchmark name not set}
+bd=results/$benchname
+if [[ -e "$bd" ]]; then
+	echo "Benchmark $benchname already exists"
+	exit 2
+fi
+mkdir $bd
+
+# On exit, kill all background jobs.
+zshexit TRAPINT() {
+	kill -SIGHUP 0
+	killall -SIGTERM mysqld
+}
+
+log() {
+	echo $@ >> $bd/log
+}
+
+# Print log file output to allow following progress.
+taskset -c $OTHER_CPU tail -f $bd/log &
+
+log Benchmark configuration
+log FAST_CPU=$FAST_CPU SLOW_CPU=$SLOW_CPU
+log BENCH_CPU=$BENCH_CPU
+log OTHER_CPU=$OTHER_CPU
+log SWP_CFG=$SWP_CFG
+log SWP_THRESHOLD=$SWP_THRESHOLD
+log
+log Profile contents:
+cat $SWP_CFG >> $bd/log
+log
+
+log Setting P-states...
+$ASYM_DIR/bin/set-pstate
+$ASYM_DIR/bin/make-asym 0
+sudo $ASYM_BUILD/tools/amdpstate -call frequency 1000 >> $bd/log
+log
+
+log $(date -Ins) Benchmark start
+
+# Add timestamp to input. Simple reimplementation of ts from moreutils.
+ts() {
+	taskset -c $OTHER_CPU awk '{print strftime("%FT%T%z"), $0; fflush()}'
+}
+
+# Start monitoring power.
+powermeter |& ts > $bd/powermeter &
+sudo taskset -c $OTHER_CPU stdbuf -oL $ASYM_BUILD/tools/amdpstate rapl 1000 |& ts > $bd/rapl &
+
+# Run test/micro with all parameter variations.
+run_bench() {
+	log Restoring database...
+	../mysql-restore.sh
+	log Starting MySQL...
+	env "$@" ../mysql-run.sh &>> $bd/log &
+	sleep 10
+
+	log $(date -Ins) start: "$@"
+	time env "$@" taskset -c $BENCH_CPU ../oltpbench-execute.sh &>> $bd/log
+	log $(date -Ins) end: "$@"
+
+	kill -SIGTERM %%
+	sleep 5
+}
+
+log $(date -Ins) start fast/slow ultmigration
+run_bench LD_PRELOAD=$ASYM_BUILD/swp/libswp_migrate.so
+log $(date -Ins) end fast/slow ultmigration
+
+log $(date -Ins) start only fast baseline
+run_bench LD_PRELOAD=$ASYM_BUILD/swp/libswp_dummy.so taskset -c $FAST_CPU
+log $(date -Ins) end only fast baseline
+
+log $(date -Ins) start only slow baseline
+run_bench LD_PRELOAD=$ASYM_BUILD/swp/libswp_dummy.so taskset -c $SLOW_CPU
+log $(date -Ins) end only slow baseline
+
+# Set the third core to the middle p-state. (zsh arrays are indexed from 1)
+frequencies=("${=$(< /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies)}")
+echo "${frequencies[2]}" | sudo tee /sys/devices/system/cpu/cpu{4,5}/cpufreq/scaling_setspeed > /dev/null
+
+for fid in $CPU_FIDS; do
+	sudo $ASYM_BUILD/tools/amdpstate def 1 CpuFid=$fid
+	sudo $ASYM_BUILD/tools/amdpstate -call frequency 1000 >> $bd/log
+	log $(date -Ins) start CpuFid $fid
+	run_bench LD_PRELOAD=$ASYM_BUILD/swp/libswp_dummy.so taskset -c 4
+	log $(date -Ins) end CpuFid $fid
+done
+
+# Reset frequency settings.
+$ASYM_DIR/bin/make-asym 0
+
+log $(date -Ins) Benchmark end
