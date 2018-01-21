@@ -1,0 +1,1044 @@
+Benchmark configuration
+FAST_CPU=0 SLOW_CPU=2
+BENCH_CPU=7
+OTHER_CPU=11
+SWP_CFG=/home/werling/src/oltpbench-scripts/mysql-profile.txt
+SWP_THRESHOLD=0.02
+
+Profile contents:
+"handle_query [../sql/sql_select.cc:102]" 0.005928
+"send_statement_status [../sql/sql_class.cc:4692]" 0.02721
+"execute [../sql/sql_update.cc:3005]" 0.004121
+"swp_init" 0.026062
+"execute [../sql/sql_insert.cc:3086]" 0.004393
+"execute_sqlcom_select [../sql/sql_parse.cc:5123]" 0.018912
+"do_command [../sql/sql_parse.cc:943]" 0.00366238
+"mysql_execute_command [../sql/sql_parse.cc:2427]" 0.0226868
+
+Setting P-states...
+CPU  0: P0 frequency = 3600 MHz
+CPU  0: effective frequency (ro) = 3597 MHz
+CPU  0: effective frequency      = 3584 MHz
+CPU  1: P0 frequency = 3600 MHz
+CPU  1: effective frequency (ro) = 3598 MHz
+CPU  1: effective frequency      = 3598 MHz
+CPU  2: P0 frequency = 3600 MHz
+CPU  2: effective frequency (ro) = 2363 MHz
+CPU  2: effective frequency      = 1439 MHz
+CPU  3: P0 frequency = 3600 MHz
+CPU  3: effective frequency (ro) = 2533 MHz
+CPU  3: effective frequency      = 1438 MHz
+CPU  4: P0 frequency = 3600 MHz
+CPU  4: effective frequency (ro) = 2560 MHz
+CPU  4: effective frequency      = 1439 MHz
+CPU  5: P0 frequency = 3600 MHz
+CPU  5: effective frequency (ro) = 2590 MHz
+CPU  5: effective frequency      = 1439 MHz
+CPU  6: P0 frequency = 3600 MHz
+CPU  6: effective frequency (ro) = 1994 MHz
+CPU  6: effective frequency      = 833 MHz
+CPU  7: P0 frequency = 3600 MHz
+CPU  7: effective frequency (ro) = 1975 MHz
+CPU  7: effective frequency      = 833 MHz
+CPU  8: P0 frequency = 3600 MHz
+CPU  8: effective frequency (ro) = 1450 MHz
+CPU  8: effective frequency      = 832 MHz
+CPU  9: P0 frequency = 3600 MHz
+CPU  9: effective frequency (ro) = 1356 MHz
+CPU  9: effective frequency      = 833 MHz
+CPU 10: P0 frequency = 3600 MHz
+CPU 10: effective frequency (ro) = 1454 MHz
+CPU 10: effective frequency      = 832 MHz
+CPU 11: P0 frequency = 3600 MHz
+CPU 11: effective frequency (ro) = 1368 MHz
+CPU 11: effective frequency      = 833 MHz
+
+2018-01-21T14:49:42,110773918+01:00 Benchmark start
+2018-01-21T14:49:42,116335500+01:00 start fast/slow ultmigration
+Restoring database...
+Starting MySQL...
+2018-01-21T13:49:44.183440Z 0 [Warning] Changed limits: max_open_files: 1024 (requested 5000)
+2018-01-21T13:49:44.183526Z 0 [Warning] Changed limits: table_open_cache: 431 (requested 2000)
+2018-01-21T13:49:44.345746Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-01-21T13:49:44.345994Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2018-01-21T13:49:44.346046Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld (mysqld 5.7.20) starting as process 27548 ...
+2018-01-21T13:49:44.353311Z 0 [Note] InnoDB: PUNCH HOLE support available
+2018-01-21T13:49:44.353372Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-01-21T13:49:44.353386Z 0 [Note] InnoDB: Uses event mutexes
+2018-01-21T13:49:44.353400Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+2018-01-21T13:49:44.353417Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2018-01-21T13:49:44.353940Z 0 [Note] InnoDB: Number of pools: 1
+2018-01-21T13:49:44.354189Z 0 [Note] InnoDB: Using CPU crc32 instructions
+2018-01-21T13:49:44.356172Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2018-01-21T13:49:44.374649Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2018-01-21T13:49:44.378297Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2018-01-21T13:49:44.390599Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-01-21T13:49:44.404138Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2018-01-21T13:49:44.404270Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2018-01-21T13:49:44.414728Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2018-01-21T13:49:44.416388Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2018-01-21T13:49:44.416423Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2018-01-21T13:49:44.417133Z 0 [Note] InnoDB: 5.7.20 started; log sequence number 1148117611
+2018-01-21T13:49:44.417548Z 0 [Note] InnoDB: Loading buffer pool(s) from /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:49:44.418001Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2018-01-21T13:49:44.426713Z 0 [Warning] Failed to set up SSL because of the following SSL library error: SSL context is not usable without certificate and private key
+2018-01-21T13:49:44.428333Z 0 [Note] Server hostname (bind-address): '0.0.0.0'; port: 3306
+2018-01-21T13:49:44.428380Z 0 [Note]   - '0.0.0.0' resolves to '0.0.0.0';
+2018-01-21T13:49:44.428471Z 0 [Note] Server socket created on IP: '0.0.0.0'.
+2018-01-21T13:49:44.430858Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:49:44.430923Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:49:44.430949Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:49:44.430997Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:49:44.431011Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:49:44.431072Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:49:44.433780Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:49:44.433827Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:49:44.445958Z 0 [Note] Event Scheduler: Loaded 0 events
+2018-01-21T13:49:44.446267Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: ready for connections.
+Version: '5.7.20'  socket: '/tmp/oltpbench.sock'  port: 3306  Source distribution
+2018-01-21T13:49:44.446296Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
+2018-01-21T13:49:44.446302Z 0 [Note] Beginning of list of non-natively partitioned tables
+2018-01-21T13:49:44.452266Z 0 [Note] End of list of non-natively partitioned tables
+2018-01-21T13:49:45.479706Z 0 [Note] InnoDB: Buffer pool(s) load completed at 180121 14:49:45
+2018-01-21T14:49:54,170470419+01:00 start: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_migrate.so
+14:49:58,655 (DBWorkload.java:259) INFO  - ======================================================================
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: /home/werling/src/oltpbench-scripts/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://127.0.0.1:3306/tpcc
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  8.0
+
+14:49:58,660 (DBWorkload.java:260) INFO  - ======================================================================
+14:49:58,748 (DBWorkload.java:806) INFO  - Creating 1 virtual terminals...
+14:49:59,731 (DBWorkload.java:811) INFO  - Launching the TPCC Benchmark with 1 Phase...
+14:49:59,744 (ThreadBench.java:325) INFO  - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [Rate=10000] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=1]
+14:49:59,745 (ThreadBench.java:472) INFO  - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+14:50:59,747 (ThreadBench.java:428) INFO  - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+14:50:59,837 (ThreadBench.java:233) INFO  - Starting WatchDogThread
+14:50:59,981 (DBWorkload.java:817) INFO  - ======================================================================
+14:50:59,982 (DBWorkload.java:818) INFO  - Rate limited reqs/s: Results(nanoSeconds=60000271882, measuredRequests=7985) = 133.0827302866854 requests/sec
+14:50:59,987 (DBWorkload.java:675) INFO  - Output Raw data into file: results/oltpbench.50.csv
+2018-01-21T14:51:00,952293229+01:00 end: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_migrate.so
+13:51:00 UTC - mysqld got signal 11 ;
+This could be because you hit a bug. It is also possible that this binary
+or one of the libraries it was linked against is corrupt, improperly built,
+or misconfigured. This error can also be caused by malfunctioning hardware.
+Attempting to collect some information that could help diagnose the problem.
+As this is a crash and something is definitely wrong, the information
+collection process might fail.
+
+key_buffer_size=8388608
+read_buffer_size=131072
+max_used_connections=1
+max_threads=151
+thread_count=0
+connection_count=0
+It is possible that mysqld could use up to 
+key_buffer_size + (read_buffer_size + sort_buffer_size)*max_threads = 68193 K  bytes of memory
+Hope that's ok; if not, decrease some variables in the equation.
+
+2018-01-21T14:51:05,957638374+01:00 end fast/slow ultmigration
+2018-01-21T14:51:05,960977179+01:00 start only fast baseline
+Restoring database...
+Starting MySQL...
+2018-01-21T13:51:07.999349Z 0 [Warning] Changed limits: max_open_files: 1024 (requested 5000)
+2018-01-21T13:51:07.999404Z 0 [Warning] Changed limits: table_open_cache: 431 (requested 2000)
+2018-01-21T13:51:08.135556Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-01-21T13:51:08.135758Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2018-01-21T13:51:08.135788Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld (mysqld 5.7.20) starting as process 28039 ...
+2018-01-21T13:51:08.138840Z 0 [Note] InnoDB: PUNCH HOLE support available
+2018-01-21T13:51:08.138861Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-01-21T13:51:08.138865Z 0 [Note] InnoDB: Uses event mutexes
+2018-01-21T13:51:08.138868Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+2018-01-21T13:51:08.138872Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2018-01-21T13:51:08.139034Z 0 [Note] InnoDB: Number of pools: 1
+2018-01-21T13:51:08.139113Z 0 [Note] InnoDB: Using CPU crc32 instructions
+2018-01-21T13:51:08.139755Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2018-01-21T13:51:08.144614Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2018-01-21T13:51:08.145813Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2018-01-21T13:51:08.157102Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-01-21T13:51:08.161225Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2018-01-21T13:51:08.161279Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2018-01-21T13:51:08.164893Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2018-01-21T13:51:08.165472Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2018-01-21T13:51:08.165484Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2018-01-21T13:51:08.165656Z 0 [Note] InnoDB: Waiting for purge to start
+2018-01-21T13:51:08.215753Z 0 [Note] InnoDB: 5.7.20 started; log sequence number 1148117611
+2018-01-21T13:51:08.215968Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2018-01-21T13:51:08.218622Z 0 [Warning] Failed to set up SSL because of the following SSL library error: SSL context is not usable without certificate and private key
+2018-01-21T13:51:08.219093Z 0 [Note] Server hostname (bind-address): '0.0.0.0'; port: 3306
+2018-01-21T13:51:08.219110Z 0 [Note]   - '0.0.0.0' resolves to '0.0.0.0';
+2018-01-21T13:51:08.219133Z 0 [Note] Server socket created on IP: '0.0.0.0'.
+2018-01-21T13:51:08.219889Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:51:08.219915Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:51:08.219921Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:51:08.219937Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:51:08.219941Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:51:08.219966Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:51:08.220763Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:51:08.220778Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:51:08.223876Z 0 [Note] Event Scheduler: Loaded 0 events
+2018-01-21T13:51:08.223971Z 0 [Note] InnoDB: Loading buffer pool(s) from /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:51:08.229137Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: ready for connections.
+Version: '5.7.20'  socket: '/tmp/oltpbench.sock'  port: 3306  Source distribution
+2018-01-21T13:51:08.229164Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
+2018-01-21T13:51:08.229166Z 0 [Note] Beginning of list of non-natively partitioned tables
+2018-01-21T13:51:08.238814Z 0 [Note] End of list of non-natively partitioned tables
+2018-01-21T13:51:09.236844Z 0 [Note] InnoDB: Buffer pool(s) load completed at 180121 14:51:09
+2018-01-21T14:51:17,995519860+01:00 start: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 0
+14:51:22,015 (DBWorkload.java:259) INFO  - ======================================================================
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: /home/werling/src/oltpbench-scripts/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://127.0.0.1:3306/tpcc
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  8.0
+
+14:51:22,020 (DBWorkload.java:260) INFO  - ======================================================================
+14:51:22,081 (DBWorkload.java:806) INFO  - Creating 1 virtual terminals...
+14:51:23,010 (DBWorkload.java:811) INFO  - Launching the TPCC Benchmark with 1 Phase...
+14:51:23,024 (ThreadBench.java:325) INFO  - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [Rate=10000] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=1]
+14:51:23,026 (ThreadBench.java:472) INFO  - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+14:52:23,028 (ThreadBench.java:428) INFO  - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+14:52:23,127 (ThreadBench.java:233) INFO  - Starting WatchDogThread
+14:52:23,245 (DBWorkload.java:817) INFO  - ======================================================================
+14:52:23,246 (DBWorkload.java:818) INFO  - Rate limited reqs/s: Results(nanoSeconds=60000887735, measuredRequests=11704) = 195.0637805842457 requests/sec
+14:52:23,263 (DBWorkload.java:675) INFO  - Output Raw data into file: results/oltpbench.51.csv
+2018-01-21T14:52:24,461917711+01:00 end: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 0
+2018-01-21T13:52:24.463161Z 0 [Note] Giving 0 client threads a chance to die gracefully
+2018-01-21T13:52:24.463182Z 0 [Note] Shutting down slave threads
+2018-01-21T13:52:24.463189Z 0 [Note] Forcefully disconnecting 0 remaining clients
+2018-01-21T13:52:24.463195Z 0 [Note] Event Scheduler: Purging the queue. 0 events
+2018-01-21T13:52:24.463780Z 0 [Note] Binlog end
+2018-01-21T13:52:24.464683Z 0 [Note] Shutting down plugin 'ngram'
+2018-01-21T13:52:24.464696Z 0 [Note] Shutting down plugin 'partition'
+2018-01-21T13:52:24.464712Z 0 [Note] Shutting down plugin 'BLACKHOLE'
+2018-01-21T13:52:24.464736Z 0 [Note] Shutting down plugin 'ARCHIVE'
+2018-01-21T13:52:24.464739Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2018-01-21T13:52:24.464761Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
+2018-01-21T13:52:24.464767Z 0 [Note] Shutting down plugin 'MyISAM'
+2018-01-21T13:52:24.464774Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
+2018-01-21T13:52:24.464777Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2018-01-21T13:52:24.464789Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2018-01-21T13:52:24.464791Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2018-01-21T13:52:24.464793Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2018-01-21T13:52:24.464803Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2018-01-21T13:52:24.464804Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2018-01-21T13:52:24.464806Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2018-01-21T13:52:24.464817Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2018-01-21T13:52:24.464819Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2018-01-21T13:52:24.464829Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2018-01-21T13:52:24.464831Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2018-01-21T13:52:24.464841Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2018-01-21T13:52:24.464843Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2018-01-21T13:52:24.464850Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2018-01-21T13:52:24.464852Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2018-01-21T13:52:24.464854Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
+2018-01-21T13:52:24.464856Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
+2018-01-21T13:52:24.464866Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2018-01-21T13:52:24.464868Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2018-01-21T13:52:24.464870Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2018-01-21T13:52:24.464872Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2018-01-21T13:52:24.464874Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2018-01-21T13:52:24.464875Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2018-01-21T13:52:24.464877Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2018-01-21T13:52:24.464879Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2018-01-21T13:52:24.464881Z 0 [Note] Shutting down plugin 'INNODB_CMP'
+2018-01-21T13:52:24.464883Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2018-01-21T13:52:24.464884Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
+2018-01-21T13:52:24.464886Z 0 [Note] Shutting down plugin 'INNODB_TRX'
+2018-01-21T13:52:24.464888Z 0 [Note] Shutting down plugin 'InnoDB'
+2018-01-21T13:52:24.464918Z 0 [Note] InnoDB: FTS optimize thread exiting.
+2018-01-21T13:52:24.464995Z 0 [Note] InnoDB: Starting shutdown...
+2018-01-21T13:52:24.565105Z 0 [Note] InnoDB: Dumping buffer pool(s) to /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:52:24.565662Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 180121 14:52:24
+2018-01-21T13:52:25.590102Z 0 [Note] InnoDB: Shutdown completed; log sequence number 1196942579
+2018-01-21T13:52:25.591005Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2018-01-21T13:52:25.591022Z 0 [Note] Shutting down plugin 'MEMORY'
+2018-01-21T13:52:25.591030Z 0 [Note] Shutting down plugin 'CSV'
+2018-01-21T13:52:25.591052Z 0 [Note] Shutting down plugin 'sha256_password'
+2018-01-21T13:52:25.591062Z 0 [Note] Shutting down plugin 'mysql_native_password'
+2018-01-21T13:52:25.591178Z 0 [Note] Shutting down plugin 'binlog'
+2018-01-21T13:52:25.591456Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: Shutdown complete
+
+2018-01-21T14:52:29,466244740+01:00 end only fast baseline
+2018-01-21T14:52:29,468977952+01:00 start only slow baseline
+Restoring database...
+Starting MySQL...
+2018-01-21T13:52:30.714672Z 0 [Warning] Changed limits: max_open_files: 1024 (requested 5000)
+2018-01-21T13:52:30.714760Z 0 [Warning] Changed limits: table_open_cache: 431 (requested 2000)
+2018-01-21T13:52:30.875599Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-01-21T13:52:30.875673Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2018-01-21T13:52:30.875715Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld (mysqld 5.7.20) starting as process 28470 ...
+2018-01-21T13:52:30.881383Z 0 [Note] InnoDB: PUNCH HOLE support available
+2018-01-21T13:52:30.881419Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-01-21T13:52:30.881428Z 0 [Note] InnoDB: Uses event mutexes
+2018-01-21T13:52:30.881435Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+2018-01-21T13:52:30.881460Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2018-01-21T13:52:30.881771Z 0 [Note] InnoDB: Number of pools: 1
+2018-01-21T13:52:30.881912Z 0 [Note] InnoDB: Using CPU crc32 instructions
+2018-01-21T13:52:30.883113Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2018-01-21T13:52:30.893689Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2018-01-21T13:52:30.895774Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2018-01-21T13:52:30.908117Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-01-21T13:52:30.916557Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2018-01-21T13:52:30.916643Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2018-01-21T13:52:30.922940Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2018-01-21T13:52:30.923918Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2018-01-21T13:52:30.923939Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2018-01-21T13:52:30.924223Z 0 [Note] InnoDB: Waiting for purge to start
+2018-01-21T13:52:30.974354Z 0 [Note] InnoDB: 5.7.20 started; log sequence number 1148117611
+2018-01-21T13:52:30.974730Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2018-01-21T13:52:30.979761Z 0 [Warning] Failed to set up SSL because of the following SSL library error: SSL context is not usable without certificate and private key
+2018-01-21T13:52:30.980497Z 0 [Note] Server hostname (bind-address): '0.0.0.0'; port: 3306
+2018-01-21T13:52:30.980528Z 0 [Note]   - '0.0.0.0' resolves to '0.0.0.0';
+2018-01-21T13:52:30.980567Z 0 [Note] Server socket created on IP: '0.0.0.0'.
+2018-01-21T13:52:30.981831Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:52:30.981871Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:52:30.981910Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:52:30.981941Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:52:30.981952Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:52:30.981966Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:52:30.983516Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:52:30.983543Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:52:30.990536Z 0 [Note] Event Scheduler: Loaded 0 events
+2018-01-21T13:52:30.990676Z 0 [Note] InnoDB: Loading buffer pool(s) from /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:52:31.003185Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: ready for connections.
+Version: '5.7.20'  socket: '/tmp/oltpbench.sock'  port: 3306  Source distribution
+2018-01-21T13:52:31.003223Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
+2018-01-21T13:52:31.003255Z 0 [Note] Beginning of list of non-natively partitioned tables
+2018-01-21T13:52:31.039292Z 0 [Note] End of list of non-natively partitioned tables
+2018-01-21T13:52:32.004684Z 0 [Note] InnoDB: Buffer pool(s) load completed at 180121 14:52:32
+2018-01-21T14:52:40,702949021+01:00 start: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 2
+14:52:44,689 (DBWorkload.java:259) INFO  - ======================================================================
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: /home/werling/src/oltpbench-scripts/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://127.0.0.1:3306/tpcc
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  8.0
+
+14:52:44,693 (DBWorkload.java:260) INFO  - ======================================================================
+14:52:44,769 (DBWorkload.java:806) INFO  - Creating 1 virtual terminals...
+14:52:45,683 (DBWorkload.java:811) INFO  - Launching the TPCC Benchmark with 1 Phase...
+14:52:45,695 (ThreadBench.java:325) INFO  - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [Rate=10000] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=1]
+14:52:45,696 (ThreadBench.java:472) INFO  - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+14:53:45,699 (ThreadBench.java:428) INFO  - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+14:53:45,803 (ThreadBench.java:233) INFO  - Starting WatchDogThread
+14:53:45,883 (DBWorkload.java:817) INFO  - ======================================================================
+14:53:45,883 (DBWorkload.java:818) INFO  - Rate limited reqs/s: Results(nanoSeconds=60000713348, measuredRequests=8057) = 134.2817368398598 requests/sec
+14:53:45,900 (DBWorkload.java:675) INFO  - Output Raw data into file: results/oltpbench.52.csv
+2018-01-21T14:53:46,832280028+01:00 end: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 2
+2018-01-21T13:53:46.833624Z 0 [Note] Giving 0 client threads a chance to die gracefully
+2018-01-21T13:53:46.833680Z 0 [Note] Shutting down slave threads
+2018-01-21T13:53:46.833694Z 0 [Note] Forcefully disconnecting 0 remaining clients
+2018-01-21T13:53:46.833703Z 0 [Note] Event Scheduler: Purging the queue. 0 events
+2018-01-21T13:53:46.833757Z 0 [Note] Binlog end
+2018-01-21T13:53:46.835218Z 0 [Note] Shutting down plugin 'ngram'
+2018-01-21T13:53:46.835237Z 0 [Note] Shutting down plugin 'partition'
+2018-01-21T13:53:46.835243Z 0 [Note] Shutting down plugin 'BLACKHOLE'
+2018-01-21T13:53:46.835249Z 0 [Note] Shutting down plugin 'ARCHIVE'
+2018-01-21T13:53:46.835268Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2018-01-21T13:53:46.835303Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
+2018-01-21T13:53:46.835312Z 0 [Note] Shutting down plugin 'MyISAM'
+2018-01-21T13:53:46.835322Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
+2018-01-21T13:53:46.835328Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2018-01-21T13:53:46.835333Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2018-01-21T13:53:46.835338Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2018-01-21T13:53:46.835342Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2018-01-21T13:53:46.835346Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2018-01-21T13:53:46.835351Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2018-01-21T13:53:46.835355Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2018-01-21T13:53:46.835360Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2018-01-21T13:53:46.835365Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2018-01-21T13:53:46.835369Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2018-01-21T13:53:46.835373Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2018-01-21T13:53:46.835388Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2018-01-21T13:53:46.835411Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2018-01-21T13:53:46.835435Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2018-01-21T13:53:46.835441Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2018-01-21T13:53:46.835445Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
+2018-01-21T13:53:46.835459Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
+2018-01-21T13:53:46.835464Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2018-01-21T13:53:46.835473Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2018-01-21T13:53:46.835490Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2018-01-21T13:53:46.835495Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2018-01-21T13:53:46.835500Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2018-01-21T13:53:46.835512Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2018-01-21T13:53:46.835516Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2018-01-21T13:53:46.835520Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2018-01-21T13:53:46.835536Z 0 [Note] Shutting down plugin 'INNODB_CMP'
+2018-01-21T13:53:46.835541Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2018-01-21T13:53:46.835545Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
+2018-01-21T13:53:46.835556Z 0 [Note] Shutting down plugin 'INNODB_TRX'
+2018-01-21T13:53:46.835575Z 0 [Note] Shutting down plugin 'InnoDB'
+2018-01-21T13:53:46.835618Z 0 [Note] InnoDB: FTS optimize thread exiting.
+2018-01-21T13:53:46.835755Z 0 [Note] InnoDB: Starting shutdown...
+2018-01-21T13:53:46.936174Z 0 [Note] InnoDB: Dumping buffer pool(s) to /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:53:46.937122Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 180121 14:53:46
+2018-01-21T13:53:47.568946Z 0 [Note] InnoDB: Shutdown completed; log sequence number 1183647833
+2018-01-21T13:53:47.570855Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2018-01-21T13:53:47.570876Z 0 [Note] Shutting down plugin 'MEMORY'
+2018-01-21T13:53:47.570884Z 0 [Note] Shutting down plugin 'CSV'
+2018-01-21T13:53:47.570909Z 0 [Note] Shutting down plugin 'sha256_password'
+2018-01-21T13:53:47.570915Z 0 [Note] Shutting down plugin 'mysql_native_password'
+2018-01-21T13:53:47.571143Z 0 [Note] Shutting down plugin 'binlog'
+2018-01-21T13:53:47.571528Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: Shutdown complete
+
+2018-01-21T14:53:51,837235692+01:00 end only slow baseline
+CPU  0: P0 frequency = 3600 MHz
+CPU  0: effective frequency (ro) = 3597 MHz
+CPU  0: effective frequency      = 3595 MHz
+CPU  1: P0 frequency = 3600 MHz
+CPU  1: effective frequency (ro) = 3598 MHz
+CPU  1: effective frequency      = 3596 MHz
+CPU  2: P0 frequency = 3600 MHz
+CPU  2: effective frequency (ro) = 2361 MHz
+CPU  2: effective frequency      = 1439 MHz
+CPU  3: P0 frequency = 3600 MHz
+CPU  3: effective frequency (ro) = 2532 MHz
+CPU  3: effective frequency      = 1439 MHz
+CPU  4: P0 frequency = 3600 MHz
+CPU  4: effective frequency (ro) = 2560 MHz
+CPU  4: effective frequency      = 1439 MHz
+CPU  5: P0 frequency = 3600 MHz
+CPU  5: effective frequency (ro) = 2590 MHz
+CPU  5: effective frequency      = 1438 MHz
+CPU  6: P0 frequency = 3600 MHz
+CPU  6: effective frequency (ro) = 1994 MHz
+CPU  6: effective frequency      = 833 MHz
+CPU  7: P0 frequency = 3600 MHz
+CPU  7: effective frequency (ro) = 1971 MHz
+CPU  7: effective frequency      = 832 MHz
+CPU  8: P0 frequency = 3600 MHz
+CPU  8: effective frequency (ro) = 1450 MHz
+CPU  8: effective frequency      = 833 MHz
+CPU  9: P0 frequency = 3600 MHz
+CPU  9: effective frequency (ro) = 1356 MHz
+CPU  9: effective frequency      = 831 MHz
+CPU 10: P0 frequency = 3600 MHz
+CPU 10: effective frequency (ro) = 1454 MHz
+CPU 10: effective frequency      = 832 MHz
+CPU 11: P0 frequency = 3600 MHz
+CPU 11: effective frequency (ro) = 1368 MHz
+CPU 11: effective frequency      = 833 MHz
+2018-01-21T14:53:52,952075807+01:00 start CpuFid 69
+Restoring database...
+Starting MySQL...
+2018-01-21T13:53:55.001064Z 0 [Warning] Changed limits: max_open_files: 1024 (requested 5000)
+2018-01-21T13:53:55.001151Z 0 [Warning] Changed limits: table_open_cache: 431 (requested 2000)
+2018-01-21T13:53:55.165563Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-01-21T13:53:55.165819Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2018-01-21T13:53:55.165863Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld (mysqld 5.7.20) starting as process 28917 ...
+2018-01-21T13:53:55.171699Z 0 [Note] InnoDB: PUNCH HOLE support available
+2018-01-21T13:53:55.171736Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-01-21T13:53:55.171744Z 0 [Note] InnoDB: Uses event mutexes
+2018-01-21T13:53:55.171752Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+2018-01-21T13:53:55.171776Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2018-01-21T13:53:55.172121Z 0 [Note] InnoDB: Number of pools: 1
+2018-01-21T13:53:55.172271Z 0 [Note] InnoDB: Using CPU crc32 instructions
+2018-01-21T13:53:55.173462Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2018-01-21T13:53:55.184061Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2018-01-21T13:53:55.186125Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2018-01-21T13:53:55.198427Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-01-21T13:53:55.206898Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2018-01-21T13:53:55.206986Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2018-01-21T13:53:55.213327Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2018-01-21T13:53:55.214294Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2018-01-21T13:53:55.214315Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2018-01-21T13:53:55.214588Z 0 [Note] InnoDB: Waiting for purge to start
+2018-01-21T13:53:55.264713Z 0 [Note] InnoDB: 5.7.20 started; log sequence number 1148117611
+2018-01-21T13:53:55.265119Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2018-01-21T13:53:55.270175Z 0 [Warning] Failed to set up SSL because of the following SSL library error: SSL context is not usable without certificate and private key
+2018-01-21T13:53:55.270892Z 0 [Note] Server hostname (bind-address): '0.0.0.0'; port: 3306
+2018-01-21T13:53:55.270917Z 0 [Note]   - '0.0.0.0' resolves to '0.0.0.0';
+2018-01-21T13:53:55.270959Z 0 [Note] Server socket created on IP: '0.0.0.0'.
+2018-01-21T13:53:55.272361Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:53:55.272400Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:53:55.272439Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:53:55.272469Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:53:55.272481Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:53:55.272495Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:53:55.274025Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:53:55.274053Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:53:55.281088Z 0 [Note] InnoDB: Loading buffer pool(s) from /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:53:55.290101Z 0 [Note] Event Scheduler: Loaded 0 events
+2018-01-21T13:53:55.298156Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: ready for connections.
+Version: '5.7.20'  socket: '/tmp/oltpbench.sock'  port: 3306  Source distribution
+2018-01-21T13:53:55.298184Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
+2018-01-21T13:53:55.298207Z 0 [Note] Beginning of list of non-natively partitioned tables
+2018-01-21T13:53:55.327405Z 0 [Note] End of list of non-natively partitioned tables
+2018-01-21T13:53:56.295255Z 0 [Note] InnoDB: Buffer pool(s) load completed at 180121 14:53:56
+2018-01-21T14:54:04,991391861+01:00 start: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 4
+14:54:09,118 (DBWorkload.java:259) INFO  - ======================================================================
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: /home/werling/src/oltpbench-scripts/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://127.0.0.1:3306/tpcc
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  8.0
+
+14:54:09,122 (DBWorkload.java:260) INFO  - ======================================================================
+14:54:09,221 (DBWorkload.java:806) INFO  - Creating 1 virtual terminals...
+14:54:10,113 (DBWorkload.java:811) INFO  - Launching the TPCC Benchmark with 1 Phase...
+14:54:10,125 (ThreadBench.java:325) INFO  - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [Rate=10000] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=1]
+14:54:10,126 (ThreadBench.java:472) INFO  - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+14:55:10,129 (ThreadBench.java:428) INFO  - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+14:55:10,218 (ThreadBench.java:233) INFO  - Starting WatchDogThread
+14:55:10,237 (DBWorkload.java:817) INFO  - ======================================================================
+14:55:10,237 (DBWorkload.java:818) INFO  - Rate limited reqs/s: Results(nanoSeconds=60000868689, measuredRequests=7825) = 130.4147785019413 requests/sec
+14:55:10,242 (DBWorkload.java:675) INFO  - Output Raw data into file: results/oltpbench.53.csv
+2018-01-21T14:55:11,158955357+01:00 end: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 4
+2018-01-21T13:55:11.160043Z 0 [Note] Giving 0 client threads a chance to die gracefully
+2018-01-21T13:55:11.160078Z 0 [Note] Shutting down slave threads
+2018-01-21T13:55:11.160091Z 0 [Note] Forcefully disconnecting 0 remaining clients
+2018-01-21T13:55:11.160122Z 0 [Note] Event Scheduler: Purging the queue. 0 events
+2018-01-21T13:55:11.160177Z 0 [Note] Binlog end
+2018-01-21T13:55:11.161623Z 0 [Note] Shutting down plugin 'ngram'
+2018-01-21T13:55:11.161643Z 0 [Note] Shutting down plugin 'partition'
+2018-01-21T13:55:11.161649Z 0 [Note] Shutting down plugin 'BLACKHOLE'
+2018-01-21T13:55:11.161655Z 0 [Note] Shutting down plugin 'ARCHIVE'
+2018-01-21T13:55:11.161660Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2018-01-21T13:55:11.161710Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
+2018-01-21T13:55:11.161719Z 0 [Note] Shutting down plugin 'MyISAM'
+2018-01-21T13:55:11.161729Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
+2018-01-21T13:55:11.161736Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2018-01-21T13:55:11.161740Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2018-01-21T13:55:11.161756Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2018-01-21T13:55:11.161766Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2018-01-21T13:55:11.161785Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2018-01-21T13:55:11.161791Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2018-01-21T13:55:11.161795Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2018-01-21T13:55:11.161804Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2018-01-21T13:55:11.161898Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2018-01-21T13:55:11.161903Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2018-01-21T13:55:11.161913Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2018-01-21T13:55:11.161951Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2018-01-21T13:55:11.161972Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2018-01-21T13:55:11.161978Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2018-01-21T13:55:11.161983Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2018-01-21T13:55:11.161988Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
+2018-01-21T13:55:11.161992Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
+2018-01-21T13:55:11.162003Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2018-01-21T13:55:11.162031Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2018-01-21T13:55:11.162036Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2018-01-21T13:55:11.162040Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2018-01-21T13:55:11.162045Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2018-01-21T13:55:11.162049Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2018-01-21T13:55:11.162053Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2018-01-21T13:55:11.162072Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2018-01-21T13:55:11.162077Z 0 [Note] Shutting down plugin 'INNODB_CMP'
+2018-01-21T13:55:11.162083Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2018-01-21T13:55:11.162088Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
+2018-01-21T13:55:11.162093Z 0 [Note] Shutting down plugin 'INNODB_TRX'
+2018-01-21T13:55:11.162103Z 0 [Note] Shutting down plugin 'InnoDB'
+2018-01-21T13:55:11.162177Z 0 [Note] InnoDB: FTS optimize thread exiting.
+2018-01-21T13:55:11.162304Z 0 [Note] InnoDB: Starting shutdown...
+2018-01-21T13:55:11.262615Z 0 [Note] InnoDB: Dumping buffer pool(s) to /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:55:11.263574Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 180121 14:55:11
+2018-01-21T13:55:11.896193Z 0 [Note] InnoDB: Shutdown completed; log sequence number 1183039313
+2018-01-21T13:55:11.898083Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2018-01-21T13:55:11.898102Z 0 [Note] Shutting down plugin 'MEMORY'
+2018-01-21T13:55:11.898111Z 0 [Note] Shutting down plugin 'CSV'
+2018-01-21T13:55:11.898124Z 0 [Note] Shutting down plugin 'sha256_password'
+2018-01-21T13:55:11.898149Z 0 [Note] Shutting down plugin 'mysql_native_password'
+2018-01-21T13:55:11.898356Z 0 [Note] Shutting down plugin 'binlog'
+2018-01-21T13:55:11.898727Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: Shutdown complete
+
+2018-01-21T14:55:16,162771700+01:00 end CpuFid 69
+CPU  0: P0 frequency = 3600 MHz
+CPU  0: effective frequency (ro) = 3597 MHz
+CPU  0: effective frequency      = 3599 MHz
+CPU  1: P0 frequency = 3600 MHz
+CPU  1: effective frequency (ro) = 3598 MHz
+CPU  1: effective frequency      = 3596 MHz
+CPU  2: P0 frequency = 3600 MHz
+CPU  2: effective frequency (ro) = 2361 MHz
+CPU  2: effective frequency      = 1440 MHz
+CPU  3: P0 frequency = 3600 MHz
+CPU  3: effective frequency (ro) = 2532 MHz
+CPU  3: effective frequency      = 1439 MHz
+CPU  4: P0 frequency = 3600 MHz
+CPU  4: effective frequency (ro) = 2559 MHz
+CPU  4: effective frequency      = 2056 MHz
+CPU  5: P0 frequency = 3600 MHz
+CPU  5: effective frequency (ro) = 2590 MHz
+CPU  5: effective frequency      = 2057 MHz
+CPU  6: P0 frequency = 3600 MHz
+CPU  6: effective frequency (ro) = 1994 MHz
+CPU  6: effective frequency      = 833 MHz
+CPU  7: P0 frequency = 3600 MHz
+CPU  7: effective frequency (ro) = 1970 MHz
+CPU  7: effective frequency      = 833 MHz
+CPU  8: P0 frequency = 3600 MHz
+CPU  8: effective frequency (ro) = 1450 MHz
+CPU  8: effective frequency      = 832 MHz
+CPU  9: P0 frequency = 3600 MHz
+CPU  9: effective frequency (ro) = 1356 MHz
+CPU  9: effective frequency      = 832 MHz
+CPU 10: P0 frequency = 3600 MHz
+CPU 10: effective frequency (ro) = 1454 MHz
+CPU 10: effective frequency      = 832 MHz
+CPU 11: P0 frequency = 3600 MHz
+CPU 11: effective frequency (ro) = 1368 MHz
+CPU 11: effective frequency      = 833 MHz
+2018-01-21T14:56:07,249340561+01:00 start CpuFid 88
+Restoring database...
+Starting MySQL...
+2018-01-21T13:56:08.342271Z 0 [Warning] Changed limits: max_open_files: 1024 (requested 5000)
+2018-01-21T13:56:08.342341Z 0 [Warning] Changed limits: table_open_cache: 431 (requested 2000)
+2018-01-21T13:56:08.494015Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-01-21T13:56:08.494082Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2018-01-21T13:56:08.494115Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld (mysqld 5.7.20) starting as process 29550 ...
+2018-01-21T13:56:08.498271Z 0 [Note] InnoDB: PUNCH HOLE support available
+2018-01-21T13:56:08.498299Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-01-21T13:56:08.498306Z 0 [Note] InnoDB: Uses event mutexes
+2018-01-21T13:56:08.498312Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+2018-01-21T13:56:08.498329Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2018-01-21T13:56:08.498559Z 0 [Note] InnoDB: Number of pools: 1
+2018-01-21T13:56:08.498666Z 0 [Note] InnoDB: Using CPU crc32 instructions
+2018-01-21T13:56:08.499555Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2018-01-21T13:56:08.507214Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2018-01-21T13:56:08.508769Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2018-01-21T13:56:08.520571Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-01-21T13:56:08.526800Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2018-01-21T13:56:08.526867Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2018-01-21T13:56:08.531770Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2018-01-21T13:56:08.532492Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2018-01-21T13:56:08.532509Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2018-01-21T13:56:08.532728Z 0 [Note] InnoDB: Waiting for purge to start
+2018-01-21T13:56:08.582839Z 0 [Note] InnoDB: 5.7.20 started; log sequence number 1148117611
+2018-01-21T13:56:08.583150Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2018-01-21T13:56:08.586928Z 0 [Warning] Failed to set up SSL because of the following SSL library error: SSL context is not usable without certificate and private key
+2018-01-21T13:56:08.587523Z 0 [Note] Server hostname (bind-address): '0.0.0.0'; port: 3306
+2018-01-21T13:56:08.587547Z 0 [Note]   - '0.0.0.0' resolves to '0.0.0.0';
+2018-01-21T13:56:08.587578Z 0 [Note] Server socket created on IP: '0.0.0.0'.
+2018-01-21T13:56:08.588512Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:56:08.588542Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:56:08.588571Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:56:08.588593Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:56:08.588602Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:56:08.588612Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:56:08.589722Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:56:08.589743Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:56:08.594749Z 0 [Note] Event Scheduler: Loaded 0 events
+2018-01-21T13:56:08.594859Z 0 [Note] InnoDB: Loading buffer pool(s) from /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:56:08.607180Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: ready for connections.
+Version: '5.7.20'  socket: '/tmp/oltpbench.sock'  port: 3306  Source distribution
+2018-01-21T13:56:08.607231Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
+2018-01-21T13:56:08.607237Z 0 [Note] Beginning of list of non-natively partitioned tables
+2018-01-21T13:56:08.623419Z 0 [Note] End of list of non-natively partitioned tables
+2018-01-21T13:56:09.608024Z 0 [Note] InnoDB: Buffer pool(s) load completed at 180121 14:56:09
+2018-01-21T14:56:18,333629954+01:00 start: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 4
+14:56:22,396 (DBWorkload.java:259) INFO  - ======================================================================
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: /home/werling/src/oltpbench-scripts/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://127.0.0.1:3306/tpcc
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  8.0
+
+14:56:22,400 (DBWorkload.java:260) INFO  - ======================================================================
+14:56:22,491 (DBWorkload.java:806) INFO  - Creating 1 virtual terminals...
+14:56:23,417 (DBWorkload.java:811) INFO  - Launching the TPCC Benchmark with 1 Phase...
+14:56:23,431 (ThreadBench.java:325) INFO  - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [Rate=10000] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=1]
+14:56:23,432 (ThreadBench.java:472) INFO  - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+14:57:23,435 (ThreadBench.java:428) INFO  - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+14:57:23,517 (ThreadBench.java:233) INFO  - Starting WatchDogThread
+14:57:23,619 (DBWorkload.java:817) INFO  - ======================================================================
+14:57:23,621 (DBWorkload.java:818) INFO  - Rate limited reqs/s: Results(nanoSeconds=60001055548, measuredRequests=9888) = 164.7971008124972 requests/sec
+14:57:23,636 (DBWorkload.java:675) INFO  - Output Raw data into file: results/oltpbench.54.csv
+2018-01-21T14:57:24,713935379+01:00 end: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 4
+2018-01-21T13:57:24.714975Z 0 [Note] Giving 0 client threads a chance to die gracefully
+2018-01-21T13:57:24.714997Z 0 [Note] Shutting down slave threads
+2018-01-21T13:57:24.715007Z 0 [Note] Forcefully disconnecting 0 remaining clients
+2018-01-21T13:57:24.715041Z 0 [Note] Event Scheduler: Purging the queue. 0 events
+2018-01-21T13:57:24.715095Z 0 [Note] Binlog end
+2018-01-21T13:57:24.716295Z 0 [Note] Shutting down plugin 'ngram'
+2018-01-21T13:57:24.716315Z 0 [Note] Shutting down plugin 'partition'
+2018-01-21T13:57:24.716319Z 0 [Note] Shutting down plugin 'BLACKHOLE'
+2018-01-21T13:57:24.716324Z 0 [Note] Shutting down plugin 'ARCHIVE'
+2018-01-21T13:57:24.716343Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2018-01-21T13:57:24.716373Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
+2018-01-21T13:57:24.716380Z 0 [Note] Shutting down plugin 'MyISAM'
+2018-01-21T13:57:24.716389Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
+2018-01-21T13:57:24.716395Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2018-01-21T13:57:24.716398Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2018-01-21T13:57:24.716404Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2018-01-21T13:57:24.716408Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2018-01-21T13:57:24.716414Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2018-01-21T13:57:24.716418Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2018-01-21T13:57:24.716427Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2018-01-21T13:57:24.716447Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2018-01-21T13:57:24.716452Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2018-01-21T13:57:24.716458Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2018-01-21T13:57:24.716462Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2018-01-21T13:57:24.716489Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2018-01-21T13:57:24.716513Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2018-01-21T13:57:24.716527Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2018-01-21T13:57:24.716536Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2018-01-21T13:57:24.716556Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
+2018-01-21T13:57:24.716571Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
+2018-01-21T13:57:24.716577Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2018-01-21T13:57:24.716584Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2018-01-21T13:57:24.716587Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2018-01-21T13:57:24.716593Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2018-01-21T13:57:24.716597Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2018-01-21T13:57:24.716602Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2018-01-21T13:57:24.716607Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2018-01-21T13:57:24.716612Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2018-01-21T13:57:24.716616Z 0 [Note] Shutting down plugin 'INNODB_CMP'
+2018-01-21T13:57:24.716629Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2018-01-21T13:57:24.716634Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
+2018-01-21T13:57:24.716642Z 0 [Note] Shutting down plugin 'INNODB_TRX'
+2018-01-21T13:57:24.716658Z 0 [Note] Shutting down plugin 'InnoDB'
+2018-01-21T13:57:24.716704Z 0 [Note] InnoDB: FTS optimize thread exiting.
+2018-01-21T13:57:24.716833Z 0 [Note] InnoDB: Starting shutdown...
+2018-01-21T13:57:24.816994Z 0 [Note] InnoDB: Dumping buffer pool(s) to /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:57:24.817747Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 180121 14:57:24
+2018-01-21T13:57:25.946753Z 0 [Note] InnoDB: Shutdown completed; log sequence number 1187205553
+2018-01-21T13:57:25.948133Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2018-01-21T13:57:25.948148Z 0 [Note] Shutting down plugin 'MEMORY'
+2018-01-21T13:57:25.948155Z 0 [Note] Shutting down plugin 'CSV'
+2018-01-21T13:57:25.948160Z 0 [Note] Shutting down plugin 'sha256_password'
+2018-01-21T13:57:25.948183Z 0 [Note] Shutting down plugin 'mysql_native_password'
+2018-01-21T13:57:25.948352Z 0 [Note] Shutting down plugin 'binlog'
+2018-01-21T13:57:25.948670Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: Shutdown complete
+
+2018-01-21T14:57:29,717665997+01:00 end CpuFid 88
+CPU  0: P0 frequency = 3600 MHz
+CPU  0: effective frequency (ro) = 3597 MHz
+CPU  0: effective frequency      = 3572 MHz
+CPU  1: P0 frequency = 3600 MHz
+CPU  1: effective frequency (ro) = 3598 MHz
+CPU  1: effective frequency      = 3515 MHz
+CPU  2: P0 frequency = 3600 MHz
+CPU  2: effective frequency (ro) = 2361 MHz
+CPU  2: effective frequency      = 1439 MHz
+CPU  3: P0 frequency = 3600 MHz
+CPU  3: effective frequency (ro) = 2532 MHz
+CPU  3: effective frequency      = 1439 MHz
+CPU  4: P0 frequency = 3600 MHz
+CPU  4: effective frequency (ro) = 2558 MHz
+CPU  4: effective frequency      = 2400 MHz
+CPU  5: P0 frequency = 3600 MHz
+CPU  5: effective frequency (ro) = 2590 MHz
+CPU  5: effective frequency      = 2377 MHz
+CPU  6: P0 frequency = 3600 MHz
+CPU  6: effective frequency (ro) = 1994 MHz
+CPU  6: effective frequency      = 832 MHz
+CPU  7: P0 frequency = 3600 MHz
+CPU  7: effective frequency (ro) = 1969 MHz
+CPU  7: effective frequency      = 831 MHz
+CPU  8: P0 frequency = 3600 MHz
+CPU  8: effective frequency (ro) = 1450 MHz
+CPU  8: effective frequency      = 830 MHz
+CPU  9: P0 frequency = 3600 MHz
+CPU  9: effective frequency (ro) = 1356 MHz
+CPU  9: effective frequency      = 832 MHz
+CPU 10: P0 frequency = 3600 MHz
+CPU 10: effective frequency (ro) = 1454 MHz
+CPU 10: effective frequency      = 824 MHz
+CPU 11: P0 frequency = 3600 MHz
+CPU 11: effective frequency (ro) = 1368 MHz
+CPU 11: effective frequency      = 832 MHz
+2018-01-21T14:58:20,811447367+01:00 start CpuFid 106
+Restoring database...
+Starting MySQL...
+2018-01-21T13:58:22.669441Z 0 [Warning] Changed limits: max_open_files: 1024 (requested 5000)
+2018-01-21T13:58:22.669507Z 0 [Warning] Changed limits: table_open_cache: 431 (requested 2000)
+2018-01-21T13:58:22.810627Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-01-21T13:58:22.810686Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2018-01-21T13:58:22.810716Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld (mysqld 5.7.20) starting as process 30260 ...
+2018-01-21T13:58:22.814532Z 0 [Note] InnoDB: PUNCH HOLE support available
+2018-01-21T13:58:22.814560Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-01-21T13:58:22.814565Z 0 [Note] InnoDB: Uses event mutexes
+2018-01-21T13:58:22.814570Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+2018-01-21T13:58:22.814575Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2018-01-21T13:58:22.814794Z 0 [Note] InnoDB: Number of pools: 1
+2018-01-21T13:58:22.814890Z 0 [Note] InnoDB: Using CPU crc32 instructions
+2018-01-21T13:58:22.815688Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2018-01-21T13:58:22.822381Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2018-01-21T13:58:22.823794Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2018-01-21T13:58:22.835443Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-01-21T13:58:22.840906Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2018-01-21T13:58:22.840973Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2018-01-21T13:58:22.845414Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2018-01-21T13:58:22.846058Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2018-01-21T13:58:22.846073Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2018-01-21T13:58:22.846276Z 0 [Note] InnoDB: Waiting for purge to start
+2018-01-21T13:58:22.896380Z 0 [Note] InnoDB: 5.7.20 started; log sequence number 1148117611
+2018-01-21T13:58:22.896650Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2018-01-21T13:58:22.900012Z 0 [Warning] Failed to set up SSL because of the following SSL library error: SSL context is not usable without certificate and private key
+2018-01-21T13:58:22.901442Z 0 [Note] Server hostname (bind-address): '0.0.0.0'; port: 3306
+2018-01-21T13:58:22.901463Z 0 [Note]   - '0.0.0.0' resolves to '0.0.0.0';
+2018-01-21T13:58:22.901493Z 0 [Note] Server socket created on IP: '0.0.0.0'.
+2018-01-21T13:58:22.902472Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:58:22.902498Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:58:22.902541Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:58:22.902562Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:58:22.902568Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:58:22.902579Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:58:22.903545Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:58:22.903563Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:58:22.907871Z 0 [Note] Event Scheduler: Loaded 0 events
+2018-01-21T13:58:22.907977Z 0 [Note] InnoDB: Loading buffer pool(s) from /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:58:22.916150Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: ready for connections.
+Version: '5.7.20'  socket: '/tmp/oltpbench.sock'  port: 3306  Source distribution
+2018-01-21T13:58:22.916197Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
+2018-01-21T13:58:22.916201Z 0 [Note] Beginning of list of non-natively partitioned tables
+2018-01-21T13:58:22.930243Z 0 [Note] End of list of non-natively partitioned tables
+2018-01-21T13:58:23.924441Z 0 [Note] InnoDB: Buffer pool(s) load completed at 180121 14:58:23
+2018-01-21T14:58:32,661802082+01:00 start: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 4
+14:58:36,789 (DBWorkload.java:259) INFO  - ======================================================================
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: /home/werling/src/oltpbench-scripts/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://127.0.0.1:3306/tpcc
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  8.0
+
+14:58:36,794 (DBWorkload.java:260) INFO  - ======================================================================
+14:58:36,893 (DBWorkload.java:806) INFO  - Creating 1 virtual terminals...
+14:58:37,800 (DBWorkload.java:811) INFO  - Launching the TPCC Benchmark with 1 Phase...
+14:58:37,812 (ThreadBench.java:325) INFO  - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [Rate=10000] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=1]
+14:58:37,814 (ThreadBench.java:472) INFO  - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+14:59:37,816 (ThreadBench.java:428) INFO  - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+14:59:37,912 (ThreadBench.java:233) INFO  - Starting WatchDogThread
+14:59:38,017 (DBWorkload.java:817) INFO  - ======================================================================
+14:59:38,018 (DBWorkload.java:818) INFO  - Rate limited reqs/s: Results(nanoSeconds=60000875912, measuredRequests=10464) = 174.39745405295375 requests/sec
+14:59:38,033 (DBWorkload.java:675) INFO  - Output Raw data into file: results/oltpbench.55.csv
+2018-01-21T14:59:39,114596144+01:00 end: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 4
+2018-01-21T13:59:39.115304Z 0 [Note] Giving 0 client threads a chance to die gracefully
+2018-01-21T13:59:39.115328Z 0 [Note] Shutting down slave threads
+2018-01-21T13:59:39.115337Z 0 [Note] Forcefully disconnecting 0 remaining clients
+2018-01-21T13:59:39.115345Z 0 [Note] Event Scheduler: Purging the queue. 0 events
+2018-01-21T13:59:39.115515Z 0 [Note] Binlog end
+2018-01-21T13:59:39.116611Z 0 [Note] Shutting down plugin 'ngram'
+2018-01-21T13:59:39.116627Z 0 [Note] Shutting down plugin 'partition'
+2018-01-21T13:59:39.116631Z 0 [Note] Shutting down plugin 'BLACKHOLE'
+2018-01-21T13:59:39.116634Z 0 [Note] Shutting down plugin 'ARCHIVE'
+2018-01-21T13:59:39.116638Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2018-01-21T13:59:39.116664Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
+2018-01-21T13:59:39.116674Z 0 [Note] Shutting down plugin 'MyISAM'
+2018-01-21T13:59:39.116699Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
+2018-01-21T13:59:39.116704Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2018-01-21T13:59:39.116710Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2018-01-21T13:59:39.116726Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2018-01-21T13:59:39.116730Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2018-01-21T13:59:39.116733Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2018-01-21T13:59:39.116739Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2018-01-21T13:59:39.116755Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2018-01-21T13:59:39.116765Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2018-01-21T13:59:39.116770Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2018-01-21T13:59:39.116780Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2018-01-21T13:59:39.116801Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2018-01-21T13:59:39.116821Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2018-01-21T13:59:39.116826Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2018-01-21T13:59:39.116829Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2018-01-21T13:59:39.116835Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2018-01-21T13:59:39.116849Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
+2018-01-21T13:59:39.116852Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
+2018-01-21T13:59:39.116856Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2018-01-21T13:59:39.116859Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2018-01-21T13:59:39.116865Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2018-01-21T13:59:39.116880Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2018-01-21T13:59:39.116883Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2018-01-21T13:59:39.116887Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2018-01-21T13:59:39.116889Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2018-01-21T13:59:39.116894Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2018-01-21T13:59:39.116896Z 0 [Note] Shutting down plugin 'INNODB_CMP'
+2018-01-21T13:59:39.116899Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2018-01-21T13:59:39.116902Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
+2018-01-21T13:59:39.116904Z 0 [Note] Shutting down plugin 'INNODB_TRX'
+2018-01-21T13:59:39.116907Z 0 [Note] Shutting down plugin 'InnoDB'
+2018-01-21T13:59:39.116951Z 0 [Note] InnoDB: FTS optimize thread exiting.
+2018-01-21T13:59:39.117062Z 0 [Note] InnoDB: Starting shutdown...
+2018-01-21T13:59:39.217210Z 0 [Note] InnoDB: Dumping buffer pool(s) to /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:59:39.217869Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 180121 14:59:39
+2018-01-21T13:59:40.244679Z 0 [Note] InnoDB: Shutdown completed; log sequence number 1192032541
+2018-01-21T13:59:40.245884Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2018-01-21T13:59:40.245899Z 0 [Note] Shutting down plugin 'MEMORY'
+2018-01-21T13:59:40.245905Z 0 [Note] Shutting down plugin 'CSV'
+2018-01-21T13:59:40.245911Z 0 [Note] Shutting down plugin 'sha256_password'
+2018-01-21T13:59:40.245932Z 0 [Note] Shutting down plugin 'mysql_native_password'
+2018-01-21T13:59:40.246093Z 0 [Note] Shutting down plugin 'binlog'
+2018-01-21T13:59:40.246397Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: Shutdown complete
+
+2018-01-21T14:59:44,118335073+01:00 end CpuFid 106
+CPU  0: P0 frequency = 3600 MHz
+CPU  0: effective frequency (ro) = 3597 MHz
+CPU  0: effective frequency      = 3593 MHz
+CPU  1: P0 frequency = 3600 MHz
+CPU  1: effective frequency (ro) = 3598 MHz
+CPU  1: effective frequency      = 3591 MHz
+CPU  2: P0 frequency = 3600 MHz
+CPU  2: effective frequency (ro) = 2361 MHz
+CPU  2: effective frequency      = 1439 MHz
+CPU  3: P0 frequency = 3600 MHz
+CPU  3: effective frequency (ro) = 2532 MHz
+CPU  3: effective frequency      = 1439 MHz
+CPU  4: P0 frequency = 3600 MHz
+CPU  4: effective frequency (ro) = 2558 MHz
+CPU  4: effective frequency      = 2879 MHz
+CPU  5: P0 frequency = 3600 MHz
+CPU  5: effective frequency (ro) = 2590 MHz
+CPU  5: effective frequency      = 2880 MHz
+CPU  6: P0 frequency = 3600 MHz
+CPU  6: effective frequency (ro) = 1994 MHz
+CPU  6: effective frequency      = 832 MHz
+CPU  7: P0 frequency = 3600 MHz
+CPU  7: effective frequency (ro) = 1968 MHz
+CPU  7: effective frequency      = 833 MHz
+CPU  8: P0 frequency = 3600 MHz
+CPU  8: effective frequency (ro) = 1450 MHz
+CPU  8: effective frequency      = 833 MHz
+CPU  9: P0 frequency = 3600 MHz
+CPU  9: effective frequency (ro) = 1356 MHz
+CPU  9: effective frequency      = 833 MHz
+CPU 10: P0 frequency = 3600 MHz
+CPU 10: effective frequency (ro) = 1454 MHz
+CPU 10: effective frequency      = 833 MHz
+CPU 11: P0 frequency = 3600 MHz
+CPU 11: effective frequency (ro) = 1368 MHz
+CPU 11: effective frequency      = 833 MHz
+2018-01-21T14:59:45,196763593+01:00 start CpuFid 125
+Restoring database...
+Starting MySQL...
+2018-01-21T13:59:46.340974Z 0 [Warning] Changed limits: max_open_files: 1024 (requested 5000)
+2018-01-21T13:59:46.341045Z 0 [Warning] Changed limits: table_open_cache: 431 (requested 2000)
+2018-01-21T13:59:46.488123Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-01-21T13:59:46.488338Z 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2018-01-21T13:59:46.488368Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld (mysqld 5.7.20) starting as process 30716 ...
+2018-01-21T13:59:46.491928Z 0 [Note] InnoDB: PUNCH HOLE support available
+2018-01-21T13:59:46.491952Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2018-01-21T13:59:46.491956Z 0 [Note] InnoDB: Uses event mutexes
+2018-01-21T13:59:46.491960Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+2018-01-21T13:59:46.491964Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2018-01-21T13:59:46.492153Z 0 [Note] InnoDB: Number of pools: 1
+2018-01-21T13:59:46.492241Z 0 [Note] InnoDB: Using CPU crc32 instructions
+2018-01-21T13:59:46.492926Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2018-01-21T13:59:46.498634Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2018-01-21T13:59:46.499927Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2018-01-21T13:59:46.511379Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2018-01-21T13:59:46.516121Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2018-01-21T13:59:46.516183Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2018-01-21T13:59:46.520144Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2018-01-21T13:59:46.520707Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2018-01-21T13:59:46.520718Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2018-01-21T13:59:46.520909Z 0 [Note] InnoDB: Waiting for purge to start
+2018-01-21T13:59:46.571010Z 0 [Note] InnoDB: 5.7.20 started; log sequence number 1148117611
+2018-01-21T13:59:46.571268Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2018-01-21T13:59:46.574276Z 0 [Warning] Failed to set up SSL because of the following SSL library error: SSL context is not usable without certificate and private key
+2018-01-21T13:59:46.575261Z 0 [Note] Server hostname (bind-address): '0.0.0.0'; port: 3306
+2018-01-21T13:59:46.575281Z 0 [Note]   - '0.0.0.0' resolves to '0.0.0.0';
+2018-01-21T13:59:46.575308Z 0 [Note] Server socket created on IP: '0.0.0.0'.
+2018-01-21T13:59:46.576119Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:59:46.576144Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:59:46.576169Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:59:46.576186Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:59:46.576210Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:59:46.576218Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:59:46.577059Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:59:46.577075Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+2018-01-21T13:59:46.580771Z 0 [Note] Event Scheduler: Loaded 0 events
+2018-01-21T13:59:46.580872Z 0 [Note] InnoDB: Loading buffer pool(s) from /tmp/oltpbench/ib_buffer_pool
+2018-01-21T13:59:46.589154Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: ready for connections.
+Version: '5.7.20'  socket: '/tmp/oltpbench.sock'  port: 3306  Source distribution
+2018-01-21T13:59:46.589197Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
+2018-01-21T13:59:46.589201Z 0 [Note] Beginning of list of non-natively partitioned tables
+2018-01-21T13:59:46.600156Z 0 [Note] End of list of non-natively partitioned tables
+2018-01-21T13:59:47.594909Z 0 [Note] InnoDB: Buffer pool(s) load completed at 180121 14:59:47
+2018-01-21T14:59:56,334472460+01:00 start: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 4
+15:00:00,466 (DBWorkload.java:259) INFO  - ======================================================================
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: /home/werling/src/oltpbench-scripts/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://127.0.0.1:3306/tpcc
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  8.0
+
+15:00:00,470 (DBWorkload.java:260) INFO  - ======================================================================
+15:00:00,567 (DBWorkload.java:806) INFO  - Creating 1 virtual terminals...
+15:00:01,519 (DBWorkload.java:811) INFO  - Launching the TPCC Benchmark with 1 Phase...
+15:00:01,530 (ThreadBench.java:325) INFO  - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [Rate=10000] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=1]
+15:00:01,532 (ThreadBench.java:472) INFO  - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+15:01:01,534 (ThreadBench.java:428) INFO  - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+15:01:01,607 (ThreadBench.java:233) INFO  - Starting WatchDogThread
+15:01:01,722 (DBWorkload.java:817) INFO  - ======================================================================
+15:01:01,723 (DBWorkload.java:818) INFO  - Rate limited reqs/s: Results(nanoSeconds=60000292320, measuredRequests=10361) = 172.68249202423218 requests/sec
+15:01:01,741 (DBWorkload.java:675) INFO  - Output Raw data into file: results/oltpbench.56.csv
+2018-01-21T15:01:02,822226122+01:00 end: LD_PRELOAD=/home/werling/src/asym-scheduling/build/swp/libswp_dummy.so taskset -c 4
+2018-01-21T14:01:02.823105Z 0 [Note] Giving 0 client threads a chance to die gracefully
+2018-01-21T14:01:02.823129Z 0 [Note] Shutting down slave threads
+2018-01-21T14:01:02.823137Z 0 [Note] Forcefully disconnecting 0 remaining clients
+2018-01-21T14:01:02.823143Z 0 [Note] Event Scheduler: Purging the queue. 0 events
+2018-01-21T14:01:02.823188Z 0 [Note] Binlog end
+2018-01-21T14:01:02.824229Z 0 [Note] Shutting down plugin 'ngram'
+2018-01-21T14:01:02.824244Z 0 [Note] Shutting down plugin 'partition'
+2018-01-21T14:01:02.824247Z 0 [Note] Shutting down plugin 'BLACKHOLE'
+2018-01-21T14:01:02.824251Z 0 [Note] Shutting down plugin 'ARCHIVE'
+2018-01-21T14:01:02.824254Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2018-01-21T14:01:02.824292Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
+2018-01-21T14:01:02.824298Z 0 [Note] Shutting down plugin 'MyISAM'
+2018-01-21T14:01:02.824306Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
+2018-01-21T14:01:02.824310Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2018-01-21T14:01:02.824313Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2018-01-21T14:01:02.824316Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2018-01-21T14:01:02.824325Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2018-01-21T14:01:02.824327Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2018-01-21T14:01:02.824330Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2018-01-21T14:01:02.824340Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2018-01-21T14:01:02.824343Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2018-01-21T14:01:02.824345Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2018-01-21T14:01:02.824353Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2018-01-21T14:01:02.824378Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2018-01-21T14:01:02.824395Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2018-01-21T14:01:02.824400Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2018-01-21T14:01:02.824403Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2018-01-21T14:01:02.824407Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2018-01-21T14:01:02.824410Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
+2018-01-21T14:01:02.824418Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
+2018-01-21T14:01:02.824434Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2018-01-21T14:01:02.824439Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2018-01-21T14:01:02.824441Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2018-01-21T14:01:02.824450Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2018-01-21T14:01:02.824452Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2018-01-21T14:01:02.824456Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2018-01-21T14:01:02.824459Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2018-01-21T14:01:02.824461Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2018-01-21T14:01:02.824469Z 0 [Note] Shutting down plugin 'INNODB_CMP'
+2018-01-21T14:01:02.824472Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2018-01-21T14:01:02.824474Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
+2018-01-21T14:01:02.824477Z 0 [Note] Shutting down plugin 'INNODB_TRX'
+2018-01-21T14:01:02.824480Z 0 [Note] Shutting down plugin 'InnoDB'
+2018-01-21T14:01:02.824515Z 0 [Note] InnoDB: FTS optimize thread exiting.
+2018-01-21T14:01:02.824607Z 0 [Note] InnoDB: Starting shutdown...
+2018-01-21T14:01:02.924751Z 0 [Note] InnoDB: Dumping buffer pool(s) to /tmp/oltpbench/ib_buffer_pool
+2018-01-21T14:01:02.925436Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 180121 15:01:02
+2018-01-21T14:01:03.951209Z 0 [Note] InnoDB: Shutdown completed; log sequence number 1193848016
+2018-01-21T14:01:03.952239Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+2018-01-21T14:01:03.952253Z 0 [Note] Shutting down plugin 'MEMORY'
+2018-01-21T14:01:03.952259Z 0 [Note] Shutting down plugin 'CSV'
+2018-01-21T14:01:03.952263Z 0 [Note] Shutting down plugin 'sha256_password'
+2018-01-21T14:01:03.952265Z 0 [Note] Shutting down plugin 'mysql_native_password'
+2018-01-21T14:01:03.952396Z 0 [Note] Shutting down plugin 'binlog'
+2018-01-21T14:01:03.952668Z 0 [Note] /home/werling/src/mysql-server/build/sql/mysqld: Shutdown complete
+
+2018-01-21T15:01:07,826704224+01:00 end CpuFid 125
+2018-01-21T15:01:07,947963989+01:00 Benchmark end
