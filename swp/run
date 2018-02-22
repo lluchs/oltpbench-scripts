@@ -1,0 +1,102 @@
+#!/bin/zsh
+
+set -eu
+
+# Configuration
+
+# CPUs used for ultmigration
+export FAST_CPU=0 SLOW_CPU=2
+OTHER_CPU=11
+# CPU used for benchmark program
+BENCH_CPU=7
+
+# Path to build directory of asym-scheduling
+ASYM_DIR=( ../../asym-scheduling(:a) )
+ASYM_BUILD=$ASYM_DIR/build
+
+# Number of runs for each benchmark type.
+ITERATIONS=10
+
+# End configuration
+
+cd ${0:A:h}
+
+benchname=${1?benchmark name not set}
+bd=results/$benchname
+if [[ -e "$bd" ]]; then
+	echo "Benchmark $benchname already exists"
+	exit 2
+fi
+mkdir -p $bd
+
+# On exit, kill all background jobs.
+zshexit TRAPINT() {
+	kill -SIGHUP 0
+	killall -SIGTERM mysqld
+}
+
+log() {
+	echo $@ >> $bd/log
+}
+
+# Print log file output to allow following progress.
+taskset -c $OTHER_CPU tail -f $bd/log &
+
+log Benchmark configuration
+log FAST_CPU=$FAST_CPU SLOW_CPU=$SLOW_CPU
+log BENCH_CPU=$BENCH_CPU
+log ITERATIONS $ITERATIONS
+log
+
+log Setting P-states...
+sudo $ASYM_BUILD/tools/amdpstate def 0 CpuFid=144 # 3600 MHz
+sudo $ASYM_BUILD/tools/amdpstate def 2 CpuFid=50  #  800 MHz
+
+echo userspace | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor > /dev/null
+# Set the first core to the middle p-state, rest to the last. (zsh arrays are indexed from 1)
+frequencies=("${=$(< /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies)}")
+echo "${frequencies[3]}" | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_setspeed > /dev/null
+echo "${frequencies[1]}" | sudo tee /sys/devices/system/cpu/cpu{0,1}/cpufreq/scaling_setspeed > /dev/null
+
+sudo $ASYM_BUILD/tools/amdpstate -call frequency 1000 >> $bd/log
+log
+
+log $(date -Ins) Benchmark start
+
+# Add timestamp to input. Simple reimplementation of ts from moreutils.
+ts() {
+	taskset -c $OTHER_CPU awk '{print strftime("%FT%T%z"), $0; fflush()}'
+}
+
+# Run test/micro with all parameter variations.
+run_bench() {
+	log Restoring database...
+	../mysql-restore.sh
+	log Starting MySQL...
+	env "$@" ../mysql-run.sh &>> $bd/log &
+	sleep 10
+
+	log $(date -Ins) start: "$@"
+	time env "$@" taskset -c $BENCH_CPU ../oltpbench-execute.sh &>> $bd/log
+	log $(date -Ins) end: "$@"
+
+	kill -SIGTERM %%
+	sleep 5
+}
+
+log $(date -Ins) start swp on fast
+for i in $(seq $ITERATIONS); do
+	run_bench taskset -c $FAST_CPU
+done
+log $(date -Ins) end swp on fast
+
+log $(date -Ins) start swp on slow
+for i in $(seq $ITERATIONS); do
+	run_bench taskset -c $SLOW_CPU
+done
+log $(date -Ins) end swp on slow
+
+# Reset frequency settings.
+$ASYM_DIR/bin/make-asym 0
+
+log $(date -Ins) Benchmark end
